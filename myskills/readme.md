@@ -26,7 +26,7 @@
 
 ## About The Project
 
-[![My Skills Screen Shot][product-screenshot]]
+<img src="assets/project-screenshot.png" alt="MySkills Screen Shot" width="200"/>
 
 A simple App for Skills management.
 
@@ -50,5 +50,3 @@ $ cd ignite-react-native/myskills/
 $ yarn add
 $ yarn run ios || yarn run android
 ```
-
-[product-screenshot]: assets/project-screenshot.png
