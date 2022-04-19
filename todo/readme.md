@@ -2,10 +2,10 @@
 
 <br />
 <div align="center">
-  <h3 align="center">My Skills</h3>
+  <h3 align="center">To.do</h3>
 
   <p align="center">
-    An App to put your awesome skills!
+    An App to organize your stuffs!
     <br />
     <a href="https://github.com/brunomestanza/ignite-react-native"><strong>Explore the projects »</strong></a>
   </p>
@@ -29,7 +29,7 @@
   <img src="assets/project-screenshot.png" alt="MySkills Screen Shot" width="200"/>
 </div>
 <br/>
-<p align="center">A simple App for Skills management.<p>
+<p align="center">A simple App for a To.Do list.<p>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
@@ -46,7 +46,7 @@ To get a local copy up and running follow these simple example steps.
 
 ```
 $ git clone https://github.com/brunomestanza/ignite-react-native
-$ cd ignite-react-native/myskills/
+$ cd ignite-react-native/todo/
 $ yarn add
 $ yarn run ios || yarn run android
 ```
