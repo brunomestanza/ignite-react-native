@@ -1,15 +1,15 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
+import { useTask } from '../contexts/useTask';
 import { TaskProps } from '../types/task';
 import pencilIcon from '../assets/icons/pencil/pencil.png';
 import trashIcon from '../assets/icons/trash/trash.png';
-import { useTask } from '../contexts/useTask';
 
 interface TaskEditProps {
   isBeingEdited: boolean;
-  item: TaskProps;
   index: number;
+  item: TaskProps;
   handleStartEditing: () => void;
   handleCancelEditing: () => void;
 }
@@ -29,7 +29,7 @@ export function TaskEdit({ item, index, isBeingEdited, handleStartEditing, handl
           ? <Icon
               name="x"
               size={22}
-              color="#bbb6b6"
+              color="#BBB6D6"
             />
           : <Image source={pencilIcon} />
         }

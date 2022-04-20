@@ -5,7 +5,6 @@ import { useTask } from '../contexts/useTask';
 
 export function TodoInput() {
   const { handleAddTask } = useTask();
-  
   const [task, setTask] = useState('');
 
   function handleAddNewTask() {

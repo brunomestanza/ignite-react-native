@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { useTask } from '../contexts/useTask';
 import logoImg from '../assets/images/logo/logo.png';
@@ -21,26 +21,26 @@ export function Header() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: getStatusBarHeight(true) + 16,
-    paddingHorizontal: 24,
-    paddingBottom: 60,
-    backgroundColor: '#8257E5',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    flexDirection: 'row'
+    backgroundColor: '#8257E5',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingBottom: 60,
+    paddingHorizontal: 24,
+    paddingTop: getStatusBarHeight(true) + 16,
   },
   tasks: {
     alignItems: 'center',
     flexDirection: 'row'
   },
   tasksCounter: {
-    fontSize: 15,
-    color: '#FFF',
+    color: '#FFFFFF',
     fontFamily: 'Inter-Regular',
+    fontSize: 15,
   },
   tasksCounterBold: {
-    fontSize: 15,
-    color: '#FFF',
+    color: '#FFFFFF',
     fontFamily: 'Inter-Bold',
+    fontSize: 15,
   }
 });
