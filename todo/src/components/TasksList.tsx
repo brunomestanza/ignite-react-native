@@ -1,22 +1,12 @@
 import React from 'react';
 import { FlatList } from 'react-native';
+import { useTask } from '../contexts/useTask';
 import { ItemWrapper } from './ItemWrapper';
 import { TaskItem } from './TaskItem';
 
-export interface Task {
-  id: number;
-  title: string;
-  done: boolean;
-}
-
-interface TasksListProps {
-  tasks: Task[];
-  toggleTaskDone: (id: number) => void;
-  removeTask: (id: number) => void;
-  editTask: (id: number, newTaskTitle: string) => void;
-}
-
-export function TasksList({ tasks, toggleTaskDone, removeTask, editTask }: TasksListProps) {
+export function TasksList() {
+  const { tasks } = useTask();
+  
   return (
     <FlatList
       data={tasks}
@@ -26,7 +16,7 @@ export function TasksList({ tasks, toggleTaskDone, removeTask, editTask }: Tasks
       renderItem={({ item, index }) => {
         return (
           <ItemWrapper index={index}>
-            <TaskItem item={item} index={index} toggleTaskDone={toggleTaskDone} removeTask={removeTask} editTask={editTask}/>
+            <TaskItem item={item} index={index} />
           </ItemWrapper>
         )
       }}

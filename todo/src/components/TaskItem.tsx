@@ -1,23 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
 import { TaskEdit } from './TaskEdit';
-
-export interface Task {
-  id: number;
-  title: string;
-  done: boolean;
-}
+import { TaskProps } from '../types/task';
+import { useTask } from '../contexts/useTask';
 
 interface TaskItemProps {
   index: number;
-  toggleTaskDone: (id: number) => void;
-  removeTask: (id: number) => void;
-  editTask: (id: number, newTaskTitle: string) => void;
-  item: Task;
+  item: TaskProps;
 }
 
-export function TaskItem({ index, toggleTaskDone, item, removeTask, editTask }: TaskItemProps) {
+export function TaskItem({ index, item }: TaskItemProps) {
+  const { handleEditTask, handleToggleTaskDone, handleRemoveTask } = useTask();
+
   const [isBeingEdited, setIsBeingEdited] = useState(false);
   const [editedTitle, setEditedTitle] = useState(item.title);
   const textInputRef = useRef<TextInput>(null);
@@ -42,7 +37,7 @@ export function TaskItem({ index, toggleTaskDone, item, removeTask, editTask }: 
   };
 
   function handleSubmitEditing() {
-    editTask(item.id, editedTitle);
+    handleEditTask(item.id, editedTitle);
     setIsBeingEdited(false);
   };
 
@@ -53,7 +48,7 @@ export function TaskItem({ index, toggleTaskDone, item, removeTask, editTask }: 
           testID={`button-${index}`}
           activeOpacity={0.7}
           style={styles.taskButton}
-          onPress={() => toggleTaskDone(item.id)}
+          onPress={() => handleToggleTaskDone(item.id)}
         >
           <View 
             testID={`marker-${index}`}
@@ -77,7 +72,13 @@ export function TaskItem({ index, toggleTaskDone, item, removeTask, editTask }: 
           />
         </TouchableOpacity>
       </View>
-      <TaskEdit item={item} removeTask={removeTask} index={index} isBeingEdited={isBeingEdited} handleStartEditing={handleStartEditing} handleCancelEditing={handleCancelEditing} />
+      <TaskEdit
+        handleCancelEditing={handleCancelEditing}
+        handleStartEditing={handleStartEditing}
+        index={index}
+        isBeingEdited={isBeingEdited}
+        item={item}
+      />
     </>
   );
 };

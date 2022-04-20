@@ -1,25 +1,22 @@
 import React from 'react';
-import { Image, StyleSheet, TextBase, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/Feather';
+import { TaskProps } from '../types/task';
 import pencilIcon from '../assets/icons/pencil/pencil.png';
 import trashIcon from '../assets/icons/trash/trash.png';
-
-export interface Task {
-  id: number;
-  title: string;
-  done: boolean;
-}
+import { useTask } from '../contexts/useTask';
 
 interface TaskEditProps {
   isBeingEdited: boolean;
-  item: Task;
+  item: TaskProps;
   index: number;
   handleStartEditing: () => void;
   handleCancelEditing: () => void;
-  removeTask: (id: number) => void;
 }
 
-export function TaskEdit({ item, index, removeTask, isBeingEdited, handleStartEditing, handleCancelEditing }: TaskEditProps) {
+export function TaskEdit({ item, index, isBeingEdited, handleStartEditing, handleCancelEditing }: TaskEditProps) {
+  const { handleRemoveTask } = useTask();
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -41,7 +38,7 @@ export function TaskEdit({ item, index, removeTask, isBeingEdited, handleStartEd
       <TouchableOpacity
         testID={`trash-${index}`}
         style={[styles.trashButton, { opacity: isBeingEdited ? 0.2 : 1 }]}
-        onPress={() => removeTask(item.id)}
+        onPress={() => handleRemoveTask(item.id)}
         disabled={isBeingEdited}
       >
         <Image source={trashIcon} />
