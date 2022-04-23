@@ -51,6 +51,7 @@ export const UserName = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
 `;
 
+// @ts-ignore
 export const Icon = styled(Feather)`
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${RFValue(24)}px;
@@ -60,8 +61,19 @@ export const HighlightCards = styled.ScrollView.attrs({
   contentContainerStyle: { paddingLeft: 24 },
   horizontal: true,
   showsHorizontalScrollIndicator: false,
-  })`
+})`
   margin-top: ${RFPercentage(20)}px;
   position: absolute;
   width: 100%;
+`;
+
+export const Transactions = styled.View`
+  flex: 1;
+  margin-top: ${RFPercentage(12)}px;
+  padding: 0 24px;
+`;
+
+export const Title = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(18)}px;
 `;
