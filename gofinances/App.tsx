@@ -5,6 +5,7 @@ import { useFonts, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from
 import { Dashboard } from './src/pages/Dashboard';
 import theme from './src/styles/theme';
 import { Register } from './src/pages/Register';
+import { CategorySelect } from './src/pages/CategorySelect';
 
 export default function App() {
   // Abaixo recebemos um boolean que diz se as fontes passadas como parâmetro foram carregadas
@@ -18,7 +19,8 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       {/* <Dashboard /> */}
-      <Register />
+      {/* <Register /> */}
+      <CategorySelect />
     </ThemeProvider>
   );
 }
