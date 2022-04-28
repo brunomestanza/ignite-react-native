@@ -10,7 +10,7 @@ interface Category {
 }
 
 interface CategorySelectProps {
-  category: string;
+  category: Category;
   setCategory: (category: Category) => void;
   closeSelectCategory: () => void;
 }
@@ -25,7 +25,10 @@ export function CategorySelect({ category, setCategory, closeSelectCategory }: C
         data={categories}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
-          <Category>
+          <Category
+            isActive={category.key === item.key}
+            onPress={() => setCategory(item)}
+          >
             <Icon name={item.icon} />
             <Name>{item.name}</Name>
           </Category>
@@ -34,7 +37,7 @@ export function CategorySelect({ category, setCategory, closeSelectCategory }: C
         style={{ flex: 1, width: '100%' }}
       />
       <Footer>
-        <Button title="Selecionar" />
+        <Button onPress={closeSelectCategory} title="Selecionar" />
       </Footer>
     </Container>
   );
