@@ -14,6 +14,12 @@ export const Header = styled.View`
   padding-bottom: 17px;
 `;
 
+export const Title = styled.Text`
+  color: ${({ theme }) => theme.colors.shape};
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(18)}px;
+`;
+
 export const Form = styled.View`
   flex: 1;
   justify-content: space-between;
@@ -21,12 +27,6 @@ export const Form = styled.View`
 `;
 
 export const Fields = styled.View``;
-
-export const Title = styled.Text`
-  color: ${({ theme }) => theme.colors.shape};
-  font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: ${RFValue(18)}px;
-`;
 
 export const TransactionsContainer = styled.View`
   flex-direction: row;

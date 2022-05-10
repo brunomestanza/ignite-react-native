@@ -61,8 +61,10 @@ export function Register() {
       amount: form.amount,
       type: transactionType,
       category: category.key,
-      date: new Date(),
+      date: new Date().toISOString(),
     };
+
+    console.log(newTransaction);
 
     try {
       const data = await AsyncStorage.getItem(collectionKey);
