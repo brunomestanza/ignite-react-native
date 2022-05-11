@@ -12,6 +12,7 @@ import { InputForm } from "../../components/Form/InputForm";
 import { TransactionsTypeButton } from "../../components/Form/TransactionsTypeButton";
 import { CategorySelect } from "../CategorySelect";
 import { Container, Header, Form, Fields, Title, TransactionsContainer } from "./styles";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 interface NavigationProps {
   navigate: (screen: string) => void;
@@ -27,8 +28,6 @@ interface CategoryState {
   name: string;
 }
 
-const collectionKey = '@gofinances:transactions';
-
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório'),
   amount: Yup.number().typeError('Informe um valor númerico').positive('O valor não pode ser negativo').required('O valor é obrigatório'),
@@ -36,12 +35,14 @@ const schema = Yup.object().shape({
 
 export function Register() {
   const navigation = useNavigation<NavigationProps>();
+  const { user } = useAuthContext();
   const [transactionType, setTransactionType] = useState<string>('');
   const [categoryModalOpen, setCategoryModalOpen] = useState<boolean>(false);
   const [category, setCategory] = useState<CategoryState>({
     key: 'category',
     name: 'Categoria',
   });
+  const collectionKey = `@gofinances:transactions_user:${user.id}`;
 
   const { control, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
@@ -64,8 +65,6 @@ export function Register() {
       date: new Date().toISOString(),
     };
 
-    console.log(newTransaction);
-
     try {
       const data = await AsyncStorage.getItem(collectionKey);
       const currentData = data ? JSON.parse(data) : [];
@@ -76,7 +75,6 @@ export function Register() {
       reset();
       navigation.navigate('Listagem');
     } catch (error) {
-      console.log(error);
       Alert.alert('Não foi possível salvar');
     }
   }

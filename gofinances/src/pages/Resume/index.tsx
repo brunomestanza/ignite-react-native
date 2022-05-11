@@ -11,8 +11,7 @@ import { addMonths, subMonths, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { ActivityIndicator } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-
-const collectionKey = '@gofinances:transactions';
+import { useAuthContext } from "../../contexts/AuthContext";
 
 interface TotalByCategory {
   key: string;
@@ -36,6 +35,8 @@ export function Resume() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [totalByCategories, setTotalByCategories] = useState<TotalByCategory[]>([]);
   const theme = useTheme();
+  const { user } = useAuthContext();
+  const collectionKey = `@gofinances:transactions_user:${user.id}`;
 
   function handleDateChange(action: 'next' | 'prev') {
     action === 'next' ? setSelectedDate(addMonths(selectedDate, 1)) : setSelectedDate(subMonths(selectedDate, 1));

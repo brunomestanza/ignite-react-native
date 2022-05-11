@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Alert } from 'react-native';
 import { useTheme } from 'styled-components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HighlightCard } from '../../components/HighlightCard';
 import { TransactionCard, TransactionCardDataProps } from '../../components/TransactionCard';
-
 import {
   Container,
   Header,
@@ -23,6 +22,7 @@ import {
   LoadingContainer,
 } from './styles';
 import { useFocusEffect } from '@react-navigation/native';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 interface HighlightCardDataProps {
   entries: HightlightCardData;
@@ -39,21 +39,24 @@ export interface DataListProps extends TransactionCardDataProps {
   id: string;
 };
 
-const collectionKey = '@gofinances:transactions';
-
 function getLastTransactionDate(collection: DataListProps[], type: 'positive' | 'negative') {  
-  const lastTransaction = new Date(Math.max.apply(Math, collection
-    .filter(item => item.type === type)
+  const transactionFilttered = collection.filter(transaction => transaction.type === type);
+  if (transactionFilttered.length === 0) {
+    return false;
+  };
+  const lastTransaction = new Date(Math.max.apply(transactionFilttered
     .map(item => new Date(item.date).getTime())));
-  
-  return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-Br', { month: 'long' })}`;
+    
+    return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-Br', { month: 'long' })}`;
 };
-
-export function Dashboard() {
+  
+  export function Dashboard() {
+  const { signOut, user } = useAuthContext();
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightCardDataProps>({} as HighlightCardDataProps);
+  const collectionKey = `@gofinances:transactions_user:${user.id}`;
 
   async function loadTransactions() {
     let entriesSum = 0;
@@ -92,21 +95,21 @@ export function Dashboard() {
       const totalSum = entriesSum - expensivesSum;
       const lastTransactionsEntries = getLastTransactionDate(formattedTransactions, 'positive');
       const lastTransactionsExpensives = getLastTransactionDate(formattedTransactions, 'negative');
-      const totalInterval = `01 a ${lastTransactionsExpensives}`;
+      const totalInterval = lastTransactionsExpensives === false ? 'Não há transações' : `01 a ${lastTransactionsExpensives}`;
       setHighlightData({
         entries: {
           amount: entriesSum.toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL',
           }),
-          lastTransaction: `Ultima entrada dia ${lastTransactionsEntries}`,
+          lastTransaction: lastTransactionsEntries === false ? 'Não há transações' : `Ultima entrada dia ${lastTransactionsEntries}`,
         },
         expensives: {
           amount: expensivesSum.toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL',
           }),
-          lastTransaction: `Ultima saída dia ${lastTransactionsExpensives}`,
+          lastTransaction: lastTransactionsExpensives  === false ? 'Não há transações' : `Ultima saída dia ${lastTransactionsExpensives}`,
         },
         total: {
           amount: totalSum.toLocaleString('pt-BR', {
@@ -119,8 +122,8 @@ export function Dashboard() {
       setTransactions(formattedTransactions);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
-    }
+      Alert.alert("Erro ao carregar as transações");
+    };
   };
   
   useEffect(() => {
@@ -142,13 +145,13 @@ export function Dashboard() {
           <Header>
             <UserContainer>
               <UserInfo>
-                <Photo source={{ uri: 'https://github.com/brunomestanza.png' }} />
+                <Photo source={{ uri: user.photo }} />
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>Bruno</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
-              <LogoutButton onPress={() => {}}>
+              <LogoutButton onPress={signOut}>
                 <Icon name="power" />
               </LogoutButton>
             </UserContainer>
