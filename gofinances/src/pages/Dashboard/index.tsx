@@ -44,7 +44,7 @@ function getLastTransactionDate(collection: DataListProps[], type: 'positive' | 
   if (transactionFilttered.length === 0) {
     return false;
   };
-  const lastTransaction = new Date(Math.max.apply(transactionFilttered
+  const lastTransaction = new Date(Math.max.apply(Math, transactionFilttered
     .map(item => new Date(item.date).getTime())));
     
     return `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-Br', { month: 'long' })}`;
