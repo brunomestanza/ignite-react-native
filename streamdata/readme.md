@@ -2,10 +2,10 @@
 
 <br />
 <div align="center">
-  <h3 align="center">SavePass</h3>
+  <h3 align="center">Stream.Data</h3>
 
   <p align="center">
-    An app to save your passwords!
+    An app to see your Twitch streamers!
     <br />
     <a href="https://github.com/brunomestanza/ignite-react-native"><strong>Explore the projects »</strong></a>
   </p>
@@ -29,7 +29,7 @@
   <img src="assets/project-screenshot.png" alt="SavePass Screen Shot" width="200"/>
 </div>
 <br/>
-<p align="center">A simple app for passwords save<p>
+<p align="center">A simple app for stream data<p>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
@@ -49,7 +49,7 @@ To get a local copy up and running follow these simple example steps.
 
 ```
 $ git clone https://github.com/brunomestanza/ignite-react-native
-$ cd ignite-react-native/savepass
+$ cd ignite-react-native/streamdata
 $ expo install
 $ expo start
 ```
