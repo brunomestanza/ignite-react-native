@@ -42,7 +42,7 @@ export function CarDetails(){
           <Accessory name="2 pessoas" icon={PeopleSvg} />
         </Acessories>
         <About>
-        Este é automóvel desportivo. Surgiu do lendário touro de lide indultado na praça Real Maestranza de Sevilla. É um belíssimo carro para quem gosta de acelerar.
+          Este é automóvel desportivo. Surgiu do lendário touro de lide indultado na praça Real Maestranza de Sevilla. É um belíssimo carro para quem gosta de acelerar.
         </About>
       </Content>
       <Footer>
