@@ -1,0 +1,12 @@
+{
+  "name": "github-explorer",
+  "displayName": "github-explorer",
+  "expo": {
+    "name": "github-explorer",
+    "slug": "github-explorer",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
