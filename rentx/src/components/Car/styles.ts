@@ -1,7 +1,8 @@
-import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
+import { RectButton } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
 
-export const Container = styled.View`
+export const Container = styled(RectButton)`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.background_secondary};
   flex-direction: row;
@@ -11,9 +12,7 @@ export const Container = styled.View`
   margin-bottom: 16px;
 `;
 
-export const Details = styled.View`
-
-`;
+export const Details = styled.View``;
 
 export const Brand = styled.Text`
   color: ${({ theme }) => theme.colors.text_detail};

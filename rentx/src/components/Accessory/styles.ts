@@ -8,7 +8,7 @@ export const Container = styled.View`
   height: 92px;
   padding: 16px;
   margin-bottom: 8px;
-  width: 109px;
+  width: 112px;
 `;
 
 export const Name = styled.Text`
