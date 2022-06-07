@@ -16,6 +16,7 @@ import { format } from 'date-fns';
 import { getPlataformDate } from '../../utils/getPlataformDate';
 import api from '../../services/api';
 import { Alert } from 'react-native';
+import { UseNavigationProps } from '../../types/UseNavigationProps';
 
 interface RouteParams {
   car: CarDTO;
@@ -27,21 +28,16 @@ interface RentalPeriod {
   end: string;
 }
 
-interface Navigation {
-  navigate: (value: string, params?: { car: CarDTO }) => void;
-  goBack: () => void;
-}
-
 export function SchedulingDetails(){
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod);
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
-  const navigation = useNavigation<Navigation>();
+  const navigation = useNavigation<UseNavigationProps>();
   const route = useRoute();
   const { car, dates } =  route.params as RouteParams;
   const rentTotal = Number(dates.length * car.rent.price);
 
-  async function handleNavigationToSchedulingComplete() {
+  async function handleNavigationToConfirmation() {
     setLoading(true);
     const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
     const unavailable_dates = [
@@ -57,7 +53,11 @@ export function SchedulingDetails(){
     api.put(`/schedules_bycars/${car.id}`, {
       id: car.id,
       unavailable_dates, 
-    }).then(() => navigation.navigate('SchedulingComplete'))
+    }).then(() => navigation.navigate('Confirmation', {
+        message: 'Agora você só precisa ir\naté a concessinária da RENTX\npegar o seu automóvel',
+        title: 'Carro alugado!',
+        nextScreen: 'Home',
+    }))
     .catch(() => {
       setLoading(false);
       Alert.alert('Não foi possível confirmar o agendamento');
@@ -123,7 +123,7 @@ export function SchedulingDetails(){
         <Button
           title="Alugar agora"
           color={theme.colors.success}
-          onPress={handleNavigationToSchedulingComplete}
+          onPress={handleNavigationToConfirmation}
           isLoading={loading}
           enabled={!loading}
          />

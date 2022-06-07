@@ -10,6 +10,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { format } from 'date-fns';
 import { getPlataformDate } from '../../utils/getPlataformDate';
 import { CarDTO } from '../../dtos/CarDTO';
+import { UseNavigationProps } from '../../types/UseNavigationProps';
 
 interface RouteParams {
   car: CarDTO;
@@ -20,22 +21,17 @@ interface RentalPeriod {
   endFormatted: string;
 }
 
-interface Navigation {
-  navigate: (value: string, params?: { car: CarDTO, dates }) => void;
-  goBack: () => void;
-}
-
 export function Scheduling(){
   const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps);
   const [markedDates, setMarkedDates] = useState<MarkedDateProps>({} as MarkedDateProps);
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod);
   const theme = useTheme();
-  const navigation = useNavigation<Navigation>();
+  const navigation = useNavigation<UseNavigationProps>();
   const route = useRoute();
   const { car } =  route.params as RouteParams;
 
   function handleNavigationToSchedulingDetails() {
-    navigation.navigate('SchedulingDetails', { car, dates: Object.keys(markedDates)}); 
+    navigation.navigate('SchedulingDetails', { car, dates: Object.keys(markedDates) } ); 
   };
 
   function handleChangeDate(date: DayProps) {

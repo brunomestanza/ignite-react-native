@@ -11,18 +11,14 @@ import Animated, { Extrapolate, interpolate, useAnimatedScrollHandler, useAnimat
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { StatusBar, StyleSheet } from 'react-native';
 import { useTheme } from 'styled-components';
+import { UseNavigationProps } from '../../types/UseNavigationProps';
 
 interface RouteParams {
   car: CarDTO;
 }
 
-interface Navigation {
-  navigate?: (value: string, params?: { car: CarDTO }) => void;
-  goBack?: () => void;
-}
-
 export function CarDetails(){
-  const navigation = useNavigation<Navigation>();
+  const navigation = useNavigation<UseNavigationProps>();
   const scrollY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler(event => {scrollY.value = event.contentOffset.y});
   const headerStyleAnimation = useAnimatedStyle(() => {

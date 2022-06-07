@@ -11,8 +11,8 @@ import {
   Container, Header, Title, Subtitle, Content, Appointment, AppointmentTitle, AppointmentQuantity,
   CarWrapper, CarFooter, CarFooterTitle, CarFooterPeriod, CarFooterDate
 } from './styles';
-import { Load } from '../../components/Load';
 import { LoadAnimated } from '../../components/LoadAnimated';
+import { UseNavigationProps } from '../../types/UseNavigationProps';
 
 interface CarProps {
   id: string;
@@ -26,7 +26,7 @@ export function MyCars(){
   const [cars, setCars] = useState<CarProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const theme = useTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation<UseNavigationProps>();
 
   useEffect(() => {
     async function getCars(){

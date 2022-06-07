@@ -4,13 +4,10 @@ import BrandSvg from '../../assets/brand.svg';
 import LogoSvg from '../../assets/logo.svg';
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming, Extrapolate, runOnJS } from 'react-native-reanimated';
 import { CommonActions, useNavigation } from '@react-navigation/native';
-
-interface Navigation {
-  dispatch: (commonActions) => void;
-}
+import { UseNavigationProps } from '../../types/UseNavigationProps';
 
 export function Splash() {
-  const navigation = useNavigation<Navigation>();
+  const navigation = useNavigation<UseNavigationProps>();
   const splashAnimation = useSharedValue(0);
   const brandStyle = useAnimatedStyle(() => {
     return {

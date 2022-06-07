@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, BackHandler } from 'react-native';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { StatusBar, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import api from '../../services/api';
-import { Load } from '../../components/Load';
 import { Car } from '../../components/Car';
 import { CarDTO } from '../../dtos/CarDTO';
 import { Container, Header, HeaderContent, TotalCars, CarList } from './styles';
@@ -13,15 +12,12 @@ import { useTheme } from 'styled-components';
 import Animated, { useSharedValue, useAnimatedStyle, useAnimatedGestureHandler, withSpring } from 'react-native-reanimated';
 import { RectButton, PanGestureHandler } from 'react-native-gesture-handler';
 import { LoadAnimated } from '../../components/LoadAnimated';
-
-interface Navigation {
-  navigate: (value: string, params?: { car: CarDTO }) => void;
-}
+import { UseNavigationProps } from '../../types/UseNavigationProps';
 
 export function Home(){
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation<Navigation>();
+  const navigation = useNavigation<UseNavigationProps>();
   const theme = useTheme();
   const positionY = useSharedValue(0);
   const positionX = useSharedValue(0);
