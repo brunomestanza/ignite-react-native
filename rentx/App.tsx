@@ -1,16 +1,17 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import { LogBox } from 'react-native'
 import { useFonts, Archivo_400Regular, Archivo_500Medium, Archivo_600SemiBold } from '@expo-google-fonts/archivo';
 import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
-import theme from './src/styles/theme';
-import { Routes } from './src/routes';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SplashScreen from 'expo-splash-screen';
-import { LogBox } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { ThemeProvider } from 'styled-components';
+import { Routes } from './src/routes';
+import theme from './src/styles/theme';
+import { AppProvider } from './src/hooks';
 
 LogBox.ignoreLogs([
-    'ViewPropTypes will be removed from React Native. Migrate to ViewPropTypes exported from \'deprecated-react-native-prop-types\'.'
-])
+  'ViewPropTypes will be removed from React Native. Migrate to ViewPropTypes exported from \'deprecated-react-native-prop-types\'.'
+]);
 
 export default function App() {
   SplashScreen.preventAutoHideAsync();
@@ -24,7 +25,9 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider theme={theme}>
-        <Routes />
+        <AppProvider>
+          <Routes />
+        </AppProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );

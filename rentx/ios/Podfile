@@ -25,6 +25,8 @@ target 'rentx' do
     # An absolute path to your application root.
     :app_path => "#{Dir.pwd}/.."
   )
+  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi', :modular_headers => true
+  pod 'simdjson', path: '../node_modules/@nozbe/simdjson'
 
   # Uncomment to opt-in to using Flipper
   # Note that if you have use_frameworks! enabled, Flipper will not work

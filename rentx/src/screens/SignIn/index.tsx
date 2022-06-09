@@ -9,12 +9,14 @@ import { PasswordInput } from '../../components/PasswordInput';
 import { KeyboardAvoid } from '../../components/KeyboardAvoid';
 import { Container, Header, Subtitle, Form, Title, Footer } from './styles';
 import { UseNavigationProps } from '../../types/UseNavigationProps';
+import { useAuth } from '../../hooks/authContext';
 
 export function SignIn(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const theme = useTheme();
   const navigation = useNavigation<UseNavigationProps>();
+  const { signIn } = useAuth();
 
   async function handleSignIn() {
     try {
@@ -23,7 +25,8 @@ export function SignIn(){
         password: Yup.string().required('A senha é obrigatória'),
       });
       await schema.validate({ email, password });
-      Alert.alert('Sucesso', 'Login realizado com sucesso');
+      Alert.alert('Tudo certo!');
+      signIn({ email, password });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         Alert.alert('Opa', error.message)

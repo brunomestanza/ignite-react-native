@@ -9,6 +9,7 @@ import { UseNavigationProps } from '../../../types/UseNavigationProps';
 import { PasswordInput } from '../../../components/PasswordInput';
 import { useTheme } from 'styled-components';
 import { Alert } from 'react-native';
+import api from '../../../services/api';
 
 interface Params {
   user: {
@@ -25,17 +26,27 @@ export function SignUpSecondStep() {
   const theme = useTheme();
   const { user } = useRoute().params as Params;
   
-  function handleRegister() {
+  async function handleRegister() {
     if (!password || !confirmPassword) {
       return Alert.alert('Informe a senha e a confirmação');
     };
     if (password != confirmPassword) {
       return Alert.alert('As senhas não são iguais');
     };
-    navigation.navigate('Confirmation', {
-      message: 'Agora é só fazer login\ne aproveitar',
-      title: 'Conta criada!',
-      nextScreen: 'SignIn',
+    await api.post('/users', {
+      name: user.name,
+      email: user.email,
+      driver_license: user.driverlicense,
+      password,
+    }).then(() => {
+      navigation.navigate('Confirmation', {
+        message: 'Agora é só fazer login\ne aproveitar',
+        title: 'Conta criada!',
+        nextScreen: 'SignIn',
+      });
+    }).catch((error) => {
+      console.log(error);
+      Alert.alert('Opa', 'Não foi possível cadastrar');
     });
   };
 

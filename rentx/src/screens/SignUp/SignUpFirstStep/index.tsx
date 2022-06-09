@@ -15,7 +15,7 @@ export function SignUpFirstStep() {
   const [email, setEmail] = useState<string>('');
   const [driverlicense, setDriverLicense] = useState<string>('');
   const navigation = useNavigation<UseNavigationProps>();
-
+ 
   async function handleNavigateToNextStep() {
     try {
       const schema = Yup.object().shape({

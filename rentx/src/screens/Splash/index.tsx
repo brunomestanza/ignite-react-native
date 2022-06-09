@@ -36,7 +36,7 @@ export function Splash() {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [{ name: 'Home' }],
+        routes: [{ name: 'SignIn' }],
       })
     )
   };
