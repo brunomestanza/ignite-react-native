@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Alert, StatusBar } from 'react-native';
-import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
+import * as Yup from 'yup';
 import { useTheme } from 'styled-components';
+import { useAuth } from '../../hooks/authContext';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 import { KeyboardAvoid } from '../../components/KeyboardAvoid';
-import { Container, Header, Subtitle, Form, Title, Footer } from './styles';
 import { UseNavigationProps } from '../../types/UseNavigationProps';
-import { useAuth } from '../../hooks/authContext';
+import { Container, Header, Subtitle, Form, Title, Footer } from './styles';
 
 export function SignIn(){
   const [email, setEmail] = useState('');
@@ -25,7 +25,6 @@ export function SignIn(){
         password: Yup.string().required('A senha é obrigatória'),
       });
       await schema.validate({ email, password });
-      Alert.alert('Tudo certo!');
       signIn({ email, password });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
