@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import api from '../../services/api';
@@ -20,17 +20,17 @@ export function Home(){
   };
 
   useEffect(() => {
-    async function fetchCars() {
-      try {
-        const response = await api.get('/cars');
-        setCars(response.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      };
-    };
-    fetchCars();
+    const abortController = new AbortController();
+    api.get('/cars').then((response) => {
+      setCars(response.data);
+    }).catch((error) => 
+      Alert.alert('Erro de carregamento', 'Ocorreu um erro ao carregar veículos, tente novamente mais tarde')
+    ).finally(() => {
+      setLoading(false);
+    });
+    return () => {
+      abortController.abort();
+    }
   }, []);
 
   return(
