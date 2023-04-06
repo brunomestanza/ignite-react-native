@@ -80,4 +80,13 @@ export const Title = styled.Text`
   margin-bottom: 8px;
 `;
 
-export const MealsList = styled.SectionList``;
+export const MealsList = styled.SectionList`
+  gap: 8px;
+`;
+
+export const MealListTitle = styled.Text`
+  color: ${({ theme }) => theme.COLORS["GRAY-100"]};
+  font-size: ${({ theme }) => theme.FONT_SIZE["LG"]}px;
+  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+  margin-top: 32px;
+`;

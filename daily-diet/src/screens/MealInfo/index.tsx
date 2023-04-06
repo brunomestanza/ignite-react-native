@@ -16,8 +16,8 @@ import { createAndUpdateMeal } from "@storage/createAndUpdateMeal";
 const mealValidationSchema = z.object({
   name: z.string({ required_error: 'O nome da comida é obrigatório.' }),
   description: z.string().optional(),
-  date: z.string({ required_error: 'A data é obrigatória.' }),
-  time: z.string({ required_error: 'A hora é obrigatória.' }),
+  date: z.string({ required_error: 'A data é obrigatória.' }).regex(/^[0-1][0-9]\.[0-1][0-9]\.[0-9][0-9]$/g, { message: 'Informe uma data no formato 10.10.10'}),
+  time: z.string({ required_error: 'A hora é obrigatória.' }).regex(/^[0-2][0-9]:[0-5][0-9]$/g, { message: 'Informe uma hora no formato 23:50'}),
 });
 
 type MealSchema = z.infer<typeof mealValidationSchema>;

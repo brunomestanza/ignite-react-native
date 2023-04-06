@@ -12,6 +12,7 @@ export const Container = styled.TouchableOpacity`
   align-items: center;
   justify-content: space-between;
   border: ${({ theme }) => `1px solid ${theme.COLORS["GRAY-500"]}`};
+  margin-top: 8px;
 `;
 
 export const InfoContainer = styled.View`

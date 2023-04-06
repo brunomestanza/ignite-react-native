@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { ArrowIcon, Avatar, Container, Description, HomeHeader, Logo, Percentage, SummaryButton, HomeVariantStyleType, Title, MealsList } from "./styles";
+import { ArrowIcon, Avatar, Container, Description, HomeHeader, Logo, Percentage, SummaryButton, Title, MealsList, MealListTitle } from "./styles";
 import logoImg from '@assets/logo.png'
 import { Button } from "@components/Button";
 import { Plus } from "phosphor-react-native";
@@ -8,20 +8,38 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getAllMeals } from "@storage/getAllMeals";
 import { MealCard } from "./components/MealCard";
 import { StoredMeals } from "src/@types/storedMeals";
-import { Meal } from "src/@types/meal";
 import { ActivityIndicator, Alert } from "react-native";
 
-interface Section {
-  title: string;
-  data: Meal[]
-}
-
 export function Home() {
-  const [typeOfPercentage, settypeOfPercentage] = useState<HomeVariantStyleType>('POSITIVE');
   const [meals, setMeals] = useState<StoredMeals>([]);
   const [isLoading, setIsLoading] = useState(true);
   const theme = useTheme();
   const navigation = useNavigation();
+
+  const quantityOfPositiveMeals = meals.reduce((accumulator, currentValue) => {
+      currentValue.data.map((meal) => {
+        if (meal.type === 'YES') {
+          return accumulator += 1;
+        }
+      });
+
+      return accumulator;
+    },
+    0
+  );
+  const quantityOfNegativeMeals = meals.reduce((accumulator, currentValue) => {
+      currentValue.data.map((meal) => {
+        if (meal.type === 'NO') {
+          return accumulator += 1;
+        }
+      });
+
+      return accumulator;
+    },
+    0
+  );
+  const percentage = (100 * quantityOfPositiveMeals / meals.length);
+  const typeOfPercentage = percentage >= 50 ? 'POSITIVE' : 'NEGATIVE';
 
   useFocusEffect(useCallback(() => {
     fetchMeals();
@@ -44,6 +62,18 @@ export function Home() {
     navigation.navigate('mealInfo');
   }
 
+  function handleGoToStatus() {
+    console.log(typeOfPercentage);
+
+    navigation.navigate('status', {
+      negativeMeals: quantityOfNegativeMeals,
+      positiveMeals: quantityOfPositiveMeals,
+      totalOfMeals: meals.length,
+      typeOfPercentage,
+      percentage
+    });
+  }
+
   return (
     <Container>
       <HomeHeader>
@@ -51,9 +81,9 @@ export function Home() {
         <Avatar source={{ uri: 'https://github.com/brunomestanza.png' }} />
       </HomeHeader>
 
-      <SummaryButton variant={typeOfPercentage}>
+      <SummaryButton onPress={handleGoToStatus} variant={typeOfPercentage}>
         <ArrowIcon variant={typeOfPercentage} />
-        <Percentage>90.86%</Percentage>
+        <Percentage>{percentage}%</Percentage>
         <Description>das refeições dentro da dieta</Description>
       </SummaryButton>
 
@@ -62,28 +92,10 @@ export function Home() {
         <Plus size={18} color={theme.COLORS.WHITE} />
       </Button>
 
-      {/* {isLoading ? <ActivityIndicator /> : mockedMeals.map((meal) => {
-        return (
-          <MealCard
-            key={meal.id}
-            id={meal.id}
-            name={meal.name.length > 23 ? (meal.name.slice(0, 23) + '...') : meal.name}
-            description={meal.description}
-            date={meal.date}
-            time={meal.time}
-            type={meal.type}
-          />
-        )
-      })} */}
-
       {isLoading ? <ActivityIndicator /> : (
         <MealsList
           sections={meals}
-          keyExtractor={(item, index) => {
-            console.log(item)
-
-            return String(item)
-          }}
+          keyExtractor={(item: any, index) => item + index}
           renderItem={({item}: any) => (
             <MealCard
               date={item.date}
@@ -95,7 +107,7 @@ export function Home() {
             />
           )}
           renderSectionHeader={({section: { title }}: any) => (
-            <Title>{title}</Title>
+            <MealListTitle>{title}</MealListTitle>
           )}
         />
       )}

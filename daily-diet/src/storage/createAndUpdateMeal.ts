@@ -23,8 +23,6 @@ export async function createAndUpdateMeal(mealToInsert: Meal) {
       const formattedNewMeal = { title: mealToInsert.date, data: [mealToInsert] };
       const formattedMeals = JSON.stringify([...storedMeals, formattedNewMeal]);
 
-      console.log(JSON.stringify(formattedMeals));
-
       await AsyncStorage.setItem(MEALS_COLLECTION, formattedMeals);
     };
 
