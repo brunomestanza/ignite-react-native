@@ -1,8 +1,8 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 import { ArrowUpRight } from 'phosphor-react-native';
-import { StoredMeals } from "src/@types/storedMeals";
 import { Meal } from "src/@types/meal";
+import { SectionList } from "react-native";
 
 interface Section {
   title: string;
@@ -80,7 +80,7 @@ export const Title = styled.Text`
   margin-bottom: 8px;
 `;
 
-export const MealsList = styled.SectionList`
+export const MealsList = styled(SectionList<Meal>)`
   gap: 8px;
 `;
 

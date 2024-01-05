@@ -95,8 +95,8 @@ export function Home() {
       {isLoading ? <ActivityIndicator /> : (
         <MealsList
           sections={meals}
-          keyExtractor={(item: any, index) => item + index}
-          renderItem={({item}: any) => (
+          keyExtractor={(item) => item.id}
+          renderItem={({item}) => (
             <MealCard
               date={item.date}
               id={item.id}
