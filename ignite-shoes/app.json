@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "igniteshoesapp",
-    "slug": "igniteshoesapp",
+    "name": "igniteshoes",
+    "slug": "igniteshoes",
+    "scheme": "igniteshoes",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -19,14 +19,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mestanza.igniteshoesapp"
+      "bundleIdentifier": "com.brunomestanza.igniteshoes"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.mestanza.igniteshoesapp"
+      "package": "com.brunomestanza.igniteshoes"
     },
     "web": {
       "favicon": "./assets/favicon.png"
