@@ -1,20 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ThemeProvider } from 'styled-components/native';
+import { SignIn } from './src/screens/SignIn';
+import theme from './src/theme';
+import { useFonts } from 'expo-font';
+import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
+import { Loading } from './src/components/Loading';
+import { StatusBar } from 'react-native';
+import { AppProvider, UserProvider } from '@realm/react';
+import { REALM_APP_ID } from '@env';
+import { Routes } from './src/routes';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
+  const [isFontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold })
+
+  if (!isFontsLoaded) {
+    return (
+      <Loading />
+    )
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <AppProvider id={REALM_APP_ID}>
+        <ThemeProvider theme={theme}>
+          <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+          <UserProvider fallback={SignIn}>
+          <Routes />
+          </UserProvider>
+        </ThemeProvider>
+      </AppProvider>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
